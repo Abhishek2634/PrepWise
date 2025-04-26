@@ -26,11 +26,9 @@ export async function setSessionCookie(idToken: string) {
 }
 
 export async function signUp(params: SignUpParams) {
-console.log("debug");
   const { uid, name, email } = params;
   try {
     // check if user exists in db
-    console.log("debug0");
     const userRecord = await db.collection("users").doc(uid).get();
     if (userRecord.exists)
       return {
@@ -39,7 +37,6 @@ console.log("debug");
       };
 
     // save user to db
-    console.log("debug1");
     await db.collection("users").doc(uid).set({
       name,
       email,
@@ -123,4 +120,34 @@ export async function getCurrentUser(): Promise<User | null> {
 export async function isAuthenticated() {
   const user = await getCurrentUser();
   return !!user;
+}
+
+export async function getInterviewsByUserId(userId: string): Promise<Interviews[] | null> {
+  const interviews = await db
+      .collection('interviews')
+      .where('userId', '==', userId)
+      .orderBy('createdAt', 'desc')
+      .get();
+
+  return interviews.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data()
+  })) as Interviews[];
+}
+
+export async function getLatestInterviews(params: GetLatestInterviewsParams): Promise<Interviews[] | null> {
+  const { userId, limit = 20 } = params;
+
+  const interviews = await db
+      .collection('interviews')
+      .orderBy('createdAt', 'desc')
+      .where('finalized', '==', true)
+      .where('userId', '!=', userId)
+      .limit(limit)
+      .get();
+
+  return interviews.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data()
+  })) as Interviews[];
 }
