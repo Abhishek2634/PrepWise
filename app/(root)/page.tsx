@@ -4,6 +4,7 @@ import Image from 'next/image';
 import InterviewCard from '@/components/InterviewCard';
 import {getCurrentUser} from '@/lib/actions/auth.action';
 import {getInterviewsByUserId, getLatestInterviews} from '@/lib/actions/general.action';
+import { Button } from '@/components/ui/button';
 
 const Page = async () => {
   const user = await getCurrentUser();
@@ -24,9 +25,10 @@ const Page = async () => {
           <p className="text-lg">
             Practice on real interview questions and get instant feedback
           </p>
-          <Link href="/interview" className="btn-primary max-sm:w-full">
-            Start an Interview
-          </Link>
+          
+          <Button asChild className="btn-primary max-sm:w-full">
+            <Link href="/interview">Start an Interview</Link>
+          </Button>
         </div>
         <Image
           src="/robot.png"
