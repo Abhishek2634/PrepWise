@@ -27,6 +27,7 @@ export async function setSessionCookie(idToken: string) {
 
 export async function signUp(params: SignUpParams) {
   const { uid, name, email } = params;
+
   try {
     // check if user exists in db
     const userRecord = await db.collection("users").doc(uid).get();
@@ -43,7 +44,7 @@ export async function signUp(params: SignUpParams) {
       // profileURL,
       // resumeURL,
     });
-    console.log("debug2");
+
     return {
       success: true,
       message: "Account created successfully. Please sign in.",
@@ -79,7 +80,7 @@ export async function signIn(params: SignInParams) {
 
     await setSessionCookie(idToken);
   } catch (error: any) {
-    console.log("error", error);
+    console.log("");
 
     return {
       success: false,
@@ -88,6 +89,14 @@ export async function signIn(params: SignInParams) {
   }
 }
 
+// Sign out user by clearing the session cookie
+export async function signOut() {
+  const cookieStore = await cookies();
+
+  cookieStore.delete("session");
+}
+
+// Get current user from session cookie
 export async function getCurrentUser(): Promise<User | null> {
   const cookieStore = await cookies();
 

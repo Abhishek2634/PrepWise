@@ -204,7 +204,7 @@ export const interviewCovers = [
   "/yahoo.png",
 ];
 
-export const dummyInterviews: Interviews[] = [
+export const dummyInterviews: Interview[] = [
   {
     id: "1",
     userId: "user1",

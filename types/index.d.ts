@@ -13,7 +13,7 @@ interface Feedback {
   createdAt: string;
 }
 
-interface Interviews {
+interface Interview {
   id: string;
   role: string;
   level: string;
@@ -39,7 +39,7 @@ interface User {
 }
 
 interface InterviewCardProps {
-  id?: string;
+  interviewId?: string;
   userId?: string;
   role: string;
   type: string;
