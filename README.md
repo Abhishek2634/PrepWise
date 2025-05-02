@@ -50,7 +50,7 @@ Make sure you have the following installed on your machine:
 
 ```bash
 git clone https://github.com/Abhishek2634/PrepWise.git
-cd ai_mock_interviews
+cd PrepWise
 ```
 
 **Installation**
